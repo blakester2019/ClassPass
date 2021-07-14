@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
-import { StyleSheet, View, KeyboardAvoidingView, Switch } from 'react-native'
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 import { Button, Input, Text } from 'react-native-elements'
+import { auth, db } from '../firebase'
 
 const RegisterScreen = () => {
   const [name, setName] = useState("")
@@ -10,6 +11,26 @@ const RegisterScreen = () => {
   // teacher determines if the user will have the
   // ability to create classes
   const [teacher, setTeacher] = useState("")
+
+  const register = () => {
+    if (teacher.toLowerCase() === "yes" || teacher.toLowerCase() === "no") {
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((authUser) => {
+          authUser.user.updateProfile({
+            displayName: name,
+          })
+          db.collection("users").add({
+            name: name,
+            email: email,
+            isTeacher: teacher,
+            userID: auth.currentUser.uid
+          })
+        })
+        .catch(error => alert(error))
+    } else {
+      alert("Only 'yes' or 'no' is an acceptable answer")
+    }
+  }
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -33,6 +54,7 @@ const RegisterScreen = () => {
         />
         <Input
           placeholder="Password"
+          secureTextEntry
           type="password"
           value={password}
           onChangeText={(text) => setPassword(text)}
@@ -40,9 +62,10 @@ const RegisterScreen = () => {
         <Input
           label="Are you a teacher?"
           placeholder="Type yes or no"
-          type="password"
+          type="text"
           value={teacher}
           onChangeText={(text) => setTeacher(text)}
+          onSubmitEditing={register}
         />
       </View>
       <Button
@@ -50,6 +73,7 @@ const RegisterScreen = () => {
         buttonStyle={styles.buttonStyle}
         raised
         title="Register"
+        onPress={register}
       />
     </KeyboardAvoidingView>
   )
