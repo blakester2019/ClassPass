@@ -2,7 +2,8 @@ import { StatusBar } from 'expo-status-bar'
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 import { Button, Input, Image, withTheme } from 'react-native-elements'
-import { auth } from '../firebase'
+import firebase from 'firebase'
+import { auth, db } from '../firebase'
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("")
@@ -11,7 +12,21 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        navigation.replace('Home')
+
+        db.collection("users")
+          .where("userID", "==", auth.currentUser.uid)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              if (doc.data().isTeacher === "no") {
+                navigation.replace('StudentHome')
+              }
+              else {
+                navigation.replace('TeacherHome')
+              }
+            })
+          })
+          .catch((error) => alert(error))
       }
     })
 
