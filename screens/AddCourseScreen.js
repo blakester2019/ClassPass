@@ -30,6 +30,7 @@ const AddCourseScreen = ({ navigation }) => {
       // add course to teachers account
       db.collection("users").doc(auth.currentUser.uid).collection("courses").doc(createdID).set({
         name: courseName,
+        subject: courseSubject.toLowerCase(),
         courseID: createdID
       })
       // navigate back to the teachers home screen

@@ -56,14 +56,20 @@ const TeacherHomeScreen = ({ navigation }) => {
     return unsubscribe
   }, [])
 
+  const editCourse = (id) => {
+    navigation.navigate("EditCourse", {
+      id: id
+    })
+  }
+
   return (
     <SafeAreaView>
       <View style={styles.titleContainer}>
         <Text h3>Manage Courses</Text>
       </View>
-      <ScrollView style={StyleSheet.container}>
+      <ScrollView>
         {courses.map(({ id, data }) => (
-          <TeacherCourseListItem id={id} data={data} />
+          <TeacherCourseListItem key={id} id={id} data={data} editCourse={editCourse} />
         ))}
       </ScrollView>
     </SafeAreaView>

@@ -9,6 +9,7 @@ import RegisterScreen from './screens/RegisterScreen'
 import StudentHomeScreen from './screens/StudentHomeScreen'
 import TeacherHomeScreen from './screens/TeacherHomeScreen'
 import AddCourseScreen from './screens/AddCourseScreen'
+import EditCourseScreen from './screens/EditCourseScreen'
 
 const Stack = createStackNavigator()
 
@@ -31,6 +32,7 @@ export default function App() {
         <Stack.Screen name="StudentHome" component={StudentHomeScreen} />
         <Stack.Screen name="TeacherHome" component={TeacherHomeScreen} />
         <Stack.Screen name="AddCourse" component={AddCourseScreen} />
+        <Stack.Screen name="EditCourse" component={EditCourseScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
