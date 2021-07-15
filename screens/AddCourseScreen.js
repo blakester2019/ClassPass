@@ -19,13 +19,29 @@ const AddCourseScreen = ({ navigation }) => {
       courseSubject.toLowerCase() === "history" ||
       courseSubject.toLowerCase() === "english" ||
       courseSubject.toLowerCase() === "other") {
+      // add course to database
+      const createdID = uuid.v1()
       db.collection("courses").add({
         name: courseName,
         subject: courseSubject.toLowerCase(),
         teacher: auth.currentUser.displayName,
         teacherID: auth.currentUser.uid,
-        courseID: uuid.v1()
+        courseID: createdID
       })
+      // add course to teachers account
+      db.collection("users")
+        .where("userID", "==", auth.currentUser.uid)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            doc.collection("courses").add({
+              courseID: createdID
+            })
+          })
+        })
+        .catch((error) => alert(error))
+      // navigate back to the teachers home screen
+      // after successful submit
       navigation.replace("TeacherHome")
     } else {
       alert("Error, not a valid subject")

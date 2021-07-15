@@ -19,11 +19,10 @@ const RegisterScreen = ({ navigation }) => {
           authUser.user.updateProfile({
             displayName: name,
           })
-          db.collection("users").add({
+          db.collection("users").doc(auth.currentUser.uid).set({
             name: name,
             email: email,
-            isTeacher: teacher,
-            userID: auth.currentUser.uid
+            isTeacher: teacher.toLowerCase(),
           })
         })
         .catch(error => alert(error))

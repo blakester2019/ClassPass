@@ -12,20 +12,14 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-
-        db.collection("users")
-          .where("userID", "==", auth.currentUser.uid)
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              if (doc.data().isTeacher === "no") {
-                navigation.replace('StudentHome')
-              }
-              else {
-                navigation.replace('TeacherHome')
-              }
-            })
-          })
+        const docRef = db.collection("users").doc(auth.currentUser.uid);
+        docRef.get().then((doc) => {
+          if (doc.data().isTeacher === "yes") {
+            navigation.replace('TeacherHome')
+          } else {
+            navigation.replace('StudentHome')
+          }
+        })
           .catch((error) => alert(error))
       }
     })
