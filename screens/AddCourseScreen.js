@@ -28,8 +28,9 @@ const AddCourseScreen = ({ navigation }) => {
         teacherID: auth.currentUser.uid,
       })
       // add course to teachers account
-      db.collection("users").doc(auth.currentUser.uid).update({
-        courses: firebase.firestore.FieldValue.arrayUnion(createdID)
+      db.collection("users").doc(auth.currentUser.uid).collection("courses").doc(createdID).set({
+        name: courseName,
+        courseID: createdID
       })
       // navigate back to the teachers home screen
       // after successful submit

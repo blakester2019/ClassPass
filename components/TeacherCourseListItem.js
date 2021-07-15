@@ -3,12 +3,12 @@ import { StyleSheet, Text, View } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { db } from '../firebase'
 
-const TeacherCourseListItem = ({ name, subject }) => {
+const TeacherCourseListItem = ({ id, data }) => {
   return (
     <ListItem bottomDivider>
       <ListItem.Content>
         <ListItem.Title style={{}}>
-          CS-150
+          {data.name}
         </ListItem.Title>
       </ListItem.Content>
     </ListItem>
