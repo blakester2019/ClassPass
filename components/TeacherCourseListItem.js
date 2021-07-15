@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { db } from '../firebase'
 
-const CourseListItem = () => {
+const TeacherCourseListItem = () => {
   return (
     <ListItem bottomDivider>
       <ListItem.Content>
@@ -15,6 +15,6 @@ const CourseListItem = () => {
   )
 }
 
-export default CourseListItem
+export default TeacherCourseListItem
 
 const styles = StyleSheet.create({})

@@ -1,11 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
-import { Button } from 'react-native-elements'
+import { StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
+import { Text } from 'react-native-elements'
 import { SimpleLineIcons, MaterialIcons } from '@expo/vector-icons'
-import CourseListItem from '../components/CourseListItem'
+import StudentCourseListItem from '../components/StudentCourseListItem'
 import { auth } from '../firebase'
 
 const StudentHomeScreen = ({ navigation }) => {
+
   const signOutUser = () => {
     auth.signOut().then(() => {
       navigation.replace("Login")
@@ -41,8 +42,11 @@ const StudentHomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
+      <View style={styles.titleContainer}>
+        <Text h3>Enrolled Courses</Text>
+      </View>
       <ScrollView style={StyleSheet.container}>
-        <CourseListItem />
+        <StudentCourseListItem />
       </ScrollView>
     </SafeAreaView>
   )
@@ -53,5 +57,14 @@ export default StudentHomeScreen
 const styles = StyleSheet.create({
   container: {
     height: "100%"
+  },
+  titleContainer: {
+    backgroundColor: "white",
+    padding: 30,
+    borderBottomWidth: 1,
+    borderBottomColor: "#CC37C2",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   }
 })
