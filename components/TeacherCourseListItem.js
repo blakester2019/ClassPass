@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { db } from '../firebase'
 
-const TeacherCourseListItem = () => {
+const TeacherCourseListItem = ({ name, subject }) => {
   return (
     <ListItem bottomDivider>
       <ListItem.Content>

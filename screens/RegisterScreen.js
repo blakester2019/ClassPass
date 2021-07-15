@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 import { Button, Input, Text } from 'react-native-elements'
+import firebase from 'firebase'
 import { auth, db } from '../firebase'
 
 const RegisterScreen = ({ navigation }) => {
@@ -23,6 +24,7 @@ const RegisterScreen = ({ navigation }) => {
             name: name,
             email: email,
             isTeacher: teacher.toLowerCase(),
+            courses: firebase.firestore.FieldValue.arrayUnion()
           })
         })
         .catch(error => alert(error))

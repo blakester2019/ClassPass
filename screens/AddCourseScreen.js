@@ -21,25 +21,16 @@ const AddCourseScreen = ({ navigation }) => {
       courseSubject.toLowerCase() === "other") {
       // add course to database
       const createdID = uuid.v1()
-      db.collection("courses").add({
+      db.collection("courses").doc(createdID).set({
         name: courseName,
         subject: courseSubject.toLowerCase(),
         teacher: auth.currentUser.displayName,
         teacherID: auth.currentUser.uid,
-        courseID: createdID
       })
       // add course to teachers account
-      db.collection("users")
-        .where("userID", "==", auth.currentUser.uid)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            doc.collection("courses").add({
-              courseID: createdID
-            })
-          })
-        })
-        .catch((error) => alert(error))
+      db.collection("users").doc(auth.currentUser.uid).update({
+        courses: firebase.firestore.FieldValue.arrayUnion(createdID)
+      })
       // navigate back to the teachers home screen
       // after successful submit
       navigation.replace("TeacherHome")

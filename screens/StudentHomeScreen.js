@@ -15,7 +15,7 @@ const StudentHomeScreen = ({ navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: `${auth.currentUser.displayName}`,
+      title: auth.currentUser.displayName,
       headerLeft: () => (
         <View style={{ marginLeft: 20 }}>
           <TouchableOpacity

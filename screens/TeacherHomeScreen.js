@@ -15,7 +15,7 @@ const TeacherHomeScreen = ({ navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: `${auth.currentUser.displayName}`,
+      title: auth.currentUser.displayName,
       headerLeft: () => (
         <View style={{ marginLeft: 20 }}>
           <TouchableOpacity
@@ -46,7 +46,7 @@ const TeacherHomeScreen = ({ navigation }) => {
         <Text h3>Manage Courses</Text>
       </View>
       <ScrollView style={StyleSheet.container}>
-        <TeacherCourseListItem />
+
       </ScrollView>
     </SafeAreaView>
   )
