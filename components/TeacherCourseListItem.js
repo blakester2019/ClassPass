@@ -20,7 +20,7 @@ const TeacherCourseListItem = ({ id, data, editCourse }) => {
   }
 
   return (
-    <ListItem onPress={() => editCourse(id)} key={id} bottomDivider>
+    <ListItem onPress={() => editCourse(id, data)} key={id} bottomDivider>
       <ListItem.Content>
         <ListItem.Title>
           {selectAvatar(data.subject)}

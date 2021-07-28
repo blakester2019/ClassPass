@@ -56,9 +56,10 @@ const TeacherHomeScreen = ({ navigation }) => {
     return unsubscribe
   }, [])
 
-  const editCourse = (id) => {
+  const editCourse = (id, data) => {
     navigation.navigate("EditCourse", {
-      id: id
+      id: id,
+      data: data
     })
   }
 
