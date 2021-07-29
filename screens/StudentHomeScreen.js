@@ -1,11 +1,12 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
 import { Text } from 'react-native-elements'
 import { SimpleLineIcons, MaterialIcons } from '@expo/vector-icons'
 import StudentCourseListItem from '../components/StudentCourseListItem'
-import { auth } from '../firebase'
+import { auth, db } from '../firebase'
 
 const StudentHomeScreen = ({ navigation }) => {
+  const [courses, setCourses] = useState([])
 
   const signOutUser = () => {
     auth.signOut().then(() => {
@@ -40,13 +41,30 @@ const StudentHomeScreen = ({ navigation }) => {
     })
   })
 
+  useLayoutEffect(() => {
+    const unsubscribe = db
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .collection("courses")
+      .onSnapshot((snapshot) => setCourses(
+        snapshot.docs.map(doc => ({
+          id: doc.id,
+          data: doc.data()
+        }))
+      ))
+
+    return unsubscribe
+  }, [])
+
   return (
     <SafeAreaView>
       <View style={styles.titleContainer}>
         <Text h3>Enrolled Courses</Text>
       </View>
       <ScrollView style={StyleSheet.container}>
-        <StudentCourseListItem />
+        {courses.map(({ id, data }) => (
+          <StudentCourseListItem key={id} id={id} data={data} />
+        ))}
       </ScrollView>
     </SafeAreaView>
   )

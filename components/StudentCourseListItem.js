@@ -1,14 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { ListItem } from 'react-native-elements'
-import { db } from '../firebase'
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 
-const StudentCourseListItem = () => {
+const StudentCourseListItem = ({ id, data }) => {
+
+  const selectAvatar = (subject) => {
+    if (subject == "math") {
+      return <MaterialCommunityIcons name="math-compass" size={24} color="#CC37C2" />
+    } else if (subject == "science") {
+      return <MaterialIcons name="science" size={24} color="#CC37C2" />
+    } else if (subject == "history") {
+      return <MaterialIcons name="history-edu" size={24} color="#CC37C2" />
+    } else if (subject == "english") {
+      return <MaterialCommunityIcons name="book-open-page-variant" size={24} color="#CC37C2" />
+    } else {
+      return <MaterialIcons name="miscellaneous-services" size={24} color="#CC37C2" />
+    }
+  }
+
   return (
-    <ListItem bottomDivider>
+    <ListItem key={id} bottomDivider>
       <ListItem.Content>
-        <ListItem.Title style={{}}>
-          CS-150
+        <ListItem.Title>
+          {selectAvatar(data.subject)}
+          <Text style={styles.title}>{data.name}</Text>
         </ListItem.Title>
       </ListItem.Content>
     </ListItem>
@@ -17,4 +33,9 @@ const StudentCourseListItem = () => {
 
 export default StudentCourseListItem
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 22,
+    marginLeft: 20
+  },
+})
