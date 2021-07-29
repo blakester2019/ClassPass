@@ -1,11 +1,12 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 
 const TeacherCourseListItem = ({ id, data, editCourse }) => {
 
-  const selectAvatar = (subject) => {
+  // Generate icon to show
+  const selectIcon = (subject) => {
     if (subject == "math") {
       return <MaterialCommunityIcons name="math-compass" size={24} color="#CC37C2" />
     } else if (subject == "science") {
@@ -23,7 +24,7 @@ const TeacherCourseListItem = ({ id, data, editCourse }) => {
     <ListItem onPress={() => editCourse(id, data)} key={id} bottomDivider>
       <ListItem.Content>
         <ListItem.Title>
-          {selectAvatar(data.subject)}
+          {selectIcon(data.subject)}
           <Text style={styles.title}>{data.name}</Text>
         </ListItem.Title>
       </ListItem.Content>

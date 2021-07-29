@@ -5,7 +5,8 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 
 const StudentCourseListItem = ({ id, data }) => {
 
-  const selectAvatar = (subject) => {
+  // Generate icon to show
+  const selectIcon = (subject) => {
     if (subject == "math") {
       return <MaterialCommunityIcons name="math-compass" size={24} color="#CC37C2" />
     } else if (subject == "science") {
@@ -23,7 +24,7 @@ const StudentCourseListItem = ({ id, data }) => {
     <ListItem key={id} bottomDivider>
       <ListItem.Content>
         <ListItem.Title>
-          {selectAvatar(data.subject)}
+          {selectIcon(data.subject)}
           <Text style={styles.title}>{data.name}</Text>
         </ListItem.Title>
       </ListItem.Content>
